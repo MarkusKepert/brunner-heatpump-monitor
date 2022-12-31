@@ -26,18 +26,27 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   delay(100);
+
+}
+
+
+void PingTest() {
+
+  if(Ping.ping(remote_host)) {
+      Serial.print("Host Online ");
+      Serial.println(Ping.averageTime());
+      
+      delay(1000);
+      digitalWrite(2, HIGH);
+      digitalWrite(2, LOW);
+    } else {
+    Serial.println("Host Offline");
+    delay(1000);
+    digitalWrite(2, LOW);
+    digitalWrite(2, HIGH);
+    }
 }
 
 void loop() {
-    if(Ping.ping(remote_host)) {
-      Serial.println("Host Online");
-      delay(1000);
-      //digitalWrite(2, HIGH);
-      //digitalWrite(2, LOW);
-    } else {
-    Serial.println("Offline");
-    delay(1000);
-    //digitalWrite(2, LOW);
-    //digitalWrite(2, HIGH);
-    }
+    PingTest();
 }
