@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "ESP8266WiFi.h"
-#include <ESP8266Ping.h>
+#include "PingTest.h"
 
-const char* remote_host = "fritz.box";
+char* remote_host = "fritz.box";
 
 
 void setup() {
@@ -29,24 +29,6 @@ void setup() {
 
 }
 
-
-void PingTest() {
-
-  if(Ping.ping(remote_host)) {
-      Serial.print("Host Online ");
-      Serial.println(Ping.averageTime());
-      
-      delay(1000);
-      digitalWrite(2, HIGH);
-      digitalWrite(2, LOW);
-    } else {
-    Serial.println("Host Offline");
-    delay(1000);
-    digitalWrite(2, LOW);
-    digitalWrite(2, HIGH);
-    }
-}
-
 void loop() {
-    PingTest();
+    PingTest(remote_host);
 }
