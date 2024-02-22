@@ -1,10 +1,15 @@
 #include <Arduino.h>
+#include <PubSubClient.h>
 #include "ESP8266WiFi.h"
-#include "PingTest.h"
-#include "MessageBroker.h"
+#include "IoManager.h"
 
-char* remote_host = "fritz.box";
+char* Wifi = "***REMOVED***";
+char* WifiPSK = "***REMOVED***";
+char* ping_host = "fritz.box";
+char* mqttbroker_host = "10.17.3.20";
 
+
+IoManager iomanager;
 
 void setup() {
   // put your setup code here, to run once:
@@ -13,24 +18,16 @@ void setup() {
   Serial.begin(9600);
   Serial.println();
 
-  WiFi.begin("***REMOVED***", "***REMOVED***");
-
-  Serial.print("Connecting");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
-
-  Serial.print("Connected, IP address: ");
-  Serial.println(WiFi.localIP());
-
+  // Setup Wifi and MQTT Connection
+  iomanager.setup(Wifi, WifiPSK, mqttbroker_host);
+  
   delay(100);
-
 }
 
 void loop() {
-    PingTest(remote_host);
-    
+
+  int avg = iomanager.pingCheck(ping_host, true);
+  iomanager.sendTopic("/home/fritzbox_ping", String(avg));
+	delay(5000);
+
 }

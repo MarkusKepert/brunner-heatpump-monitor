@@ -1,1 +1,0 @@
-void PingTest(char* remote_host);
