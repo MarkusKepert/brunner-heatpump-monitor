@@ -6,13 +6,20 @@ void PingTest(char* remote_host) {
       Serial.print("Host Online ");
       Serial.println(Ping.averageTime());
       
-      delay(1000);
       digitalWrite(2, HIGH);
+      delay(100);
       digitalWrite(2, LOW);
+      delay(900);
     } else {
     Serial.println("Host Offline");
-    delay(1000);
-    digitalWrite(2, LOW);
+    
     digitalWrite(2, HIGH);
+    delay(50);
+    digitalWrite(2, LOW);
+    delay(50);
+    digitalWrite(2, HIGH);
+    delay(50);
+    digitalWrite(2, LOW);
+    delay(850);
     }
 }
